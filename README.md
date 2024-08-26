@@ -1,5 +1,7 @@
-Step 1:
-$javac *.java
+# Snake Game in Java
 
-Step 2:
+### How to run the game?
+```
+$javac *.java
 $java snakegame
+```
