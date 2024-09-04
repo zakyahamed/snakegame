@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     Timer timer;
     Random random;
+    int highscore;
 
     JButton startButton;
     JButton restartButton;
@@ -136,6 +137,7 @@ public class GamePanel extends JPanel implements ActionListener {
         if ((x[0] == appleX) && (y[0] == appleY)) {
             bodyParts++;
             applesEaten++;
+            highscore = Math.max(highscore, applesEaten);
             newApple();
         }
     }
@@ -159,12 +161,19 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setColor(Color.red);
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics1 = getFontMetrics(g.getFont());
-        g.drawString("Game Over", (SCREEN_WIDTH - metrics1.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
-        g.setColor(Color.red);
+        if (highscore <= applesEaten && applesEaten > 0) {
+            g.drawString("New High Score!", (SCREEN_WIDTH - metrics1.stringWidth("New High Score!")) / 2, SCREEN_HEIGHT / 2);
+        } else {
+            g.drawString("Try Again!", (SCREEN_WIDTH - metrics1.stringWidth("Try Again!")) / 2, SCREEN_HEIGHT / 2);
+        }
+        g.setColor(Color.green);
         g.setFont(new Font("Ink Free", Font.BOLD, 40));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
-        g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics2.stringWidth("Score: " + applesEaten)) / 2,
-                g.getFont().getSize());
+        int yPosition = g.getFont().getSize(); 
+        g.drawString("Your Score: " + applesEaten, (SCREEN_WIDTH - metrics2.stringWidth("Your Score: " + applesEaten)) / 2, yPosition);
+        yPosition += g.getFont().getSize(); 
+        g.drawString("High Score: " + highscore, (SCREEN_WIDTH - metrics2.stringWidth("High Score: " + highscore)) / 2, yPosition);
+        
     }
 
     @Override
